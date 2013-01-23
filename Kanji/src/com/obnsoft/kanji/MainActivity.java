@@ -12,6 +12,8 @@ import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.CharacterStyle;
+import android.util.TypedValue;
+import android.view.Display;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.view.Window;
@@ -131,6 +133,10 @@ public class MainActivity extends Activity {
         mBtnPrev = (ImageButton) findViewById(R.id.btn_prev);
         mBtnNext = (ImageButton) findViewById(R.id.btn_next);
 
+        Display disp = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
+        int size = Math.min(disp.getWidth(), disp.getHeight()) / 2;
+        mLblMagnify.setWidth(size);
+        mLblMagnify.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
         mLblMagnify.setTextColor(FOCUS_FGCOL);
         mLblMagnify.setBackgroundColor(FOCUS_BGCOL);
 
