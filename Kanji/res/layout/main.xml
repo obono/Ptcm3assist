@@ -9,6 +9,15 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         />
+    <TextView
+        android:id="@+id/lbl_license"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/lbl_magnify"
+        android:layout_alignRight="@id/lbl_magnify"
+        android:layout_alignBottom="@id/lbl_magnify"
+        android:gravity="center"
+        />
     <EditText
         android:id="@+id/txt_enter"
         android:layout_width="120dp"

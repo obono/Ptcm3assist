@@ -17,6 +17,9 @@
 package com.obnsoft.kanji;
 
 import android.app.Activity;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -49,6 +52,7 @@ public class MainActivity extends Activity {
 
     private Editable    mEditable;
     private TextView    mLblMagnify;
+    private TextView    mLblLicense;
     private TextView    mLblUnicode;
     private EditText    mTxtEnter;
     private ImageButton mBtnPrev;
@@ -144,6 +148,7 @@ public class MainActivity extends Activity {
 
         setContentView(R.layout.main);
         mLblMagnify = (TextView) findViewById(R.id.lbl_magnify);
+        mLblLicense = (TextView) findViewById(R.id.lbl_license);
         mLblUnicode = (TextView) findViewById(R.id.lbl_unicode);
         mTxtEnter = (EditText) findViewById(R.id.txt_enter);
         mBtnPrev = (ImageButton) findViewById(R.id.btn_prev);
@@ -155,6 +160,13 @@ public class MainActivity extends Activity {
         mLblMagnify.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
         mLblMagnify.setTextColor(FOCUS_FGCOL);
         mLblMagnify.setBackgroundColor(FOCUS_BGCOL);
+
+        mLblLicense.setText(new StringBuffer()
+                .append(getString(R.string.app_code)).append(" \"")
+                .append(getString(R.string.app_name)).append("\" ")
+                .append(getVersion()).append("\n\n")
+                .append(getString(R.string.license)).toString());
+        mLblLicense.setTextColor(FOCUS_FGCOL);
 
         mTxtEnter.setFilters(new InputFilter[] {mInputFilter});
         mTxtEnter.addTextChangedListener(mTextWatcher);
@@ -189,6 +201,7 @@ public class MainActivity extends Activity {
             String str = mEditable.subSequence(mFocusPos, mFocusPos + 1).toString();
             long code = str.charAt(0);
             mLblMagnify.setText(str);
+            mLblLicense.setVisibility(View.INVISIBLE);
             mLblUnicode.setText("U+".concat(String.format("%04X", code)));
         } else {
             mLblMagnify.setText(null);
@@ -197,4 +210,16 @@ public class MainActivity extends Activity {
         mBtnPrev.setEnabled((mFocusPos > 0));
         mBtnNext.setEnabled((mFocusPos < mTextLen - 1));
     }
+
+    private String getVersion() {
+        try {
+            PackageInfo packageInfo = getPackageManager().getPackageInfo(
+                    getPackageName(), PackageManager.GET_META_DATA);
+            return "Version ".concat(packageInfo.versionName);
+        } catch (NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
