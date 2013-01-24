@@ -37,6 +37,7 @@ import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -167,6 +168,10 @@ public class MainActivity extends Activity {
                 .append(getVersion()).append("\n\n")
                 .append(getString(R.string.license)).toString());
         mLblLicense.setTextColor(FOCUS_FGCOL);
+        AlphaAnimation anim = new AlphaAnimation(1f, 0f);
+        anim.setDuration(3000);
+        anim.setFillAfter(true);
+        mLblLicense.startAnimation(anim);
 
         mTxtEnter.setFilters(new InputFilter[] {mInputFilter});
         mTxtEnter.addTextChangedListener(mTextWatcher);
@@ -201,6 +206,7 @@ public class MainActivity extends Activity {
             String str = mEditable.subSequence(mFocusPos, mFocusPos + 1).toString();
             long code = str.charAt(0);
             mLblMagnify.setText(str);
+            mLblLicense.clearAnimation();
             mLblLicense.setVisibility(View.INVISIBLE);
             mLblUnicode.setText("U+".concat(String.format("%04X", code)));
         } else {
