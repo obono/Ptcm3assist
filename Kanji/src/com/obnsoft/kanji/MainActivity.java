@@ -55,6 +55,7 @@ public class MainActivity extends Activity {
     private TextView    mLblMagnify;
     private TextView    mLblLicense;
     private TextView    mLblUnicode;
+    private TextView    mLblUnicodeBlock;
     private EditText    mTxtEnter;
     private ImageButton mBtnPrev;
     private ImageButton mBtnNext;
@@ -151,6 +152,7 @@ public class MainActivity extends Activity {
         mLblMagnify = (TextView) findViewById(R.id.lbl_magnify);
         mLblLicense = (TextView) findViewById(R.id.lbl_license);
         mLblUnicode = (TextView) findViewById(R.id.lbl_unicode);
+        mLblUnicodeBlock = (TextView) findViewById(R.id.lbl_unicodeblock);
         mTxtEnter = (EditText) findViewById(R.id.txt_enter);
         mBtnPrev = (ImageButton) findViewById(R.id.btn_prev);
         mBtnNext = (ImageButton) findViewById(R.id.btn_next);
@@ -204,14 +206,16 @@ public class MainActivity extends Activity {
             mEditable.setSpan(mEmphasis,
                     mFocusPos, mFocusPos + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             String str = mEditable.subSequence(mFocusPos, mFocusPos + 1).toString();
-            long code = str.charAt(0);
+            char code = str.charAt(0);
             mLblMagnify.setText(str);
             mLblLicense.clearAnimation();
             mLblLicense.setVisibility(View.INVISIBLE);
-            mLblUnicode.setText("U+".concat(String.format("%04X", code)));
+            mLblUnicode.setText("U+".concat(String.format("%04X", (long) code)));
+            mLblUnicodeBlock.setText(Character.UnicodeBlock.of(code).toString());
         } else {
             mLblMagnify.setText(null);
             mLblUnicode.setText(null);
+            mLblUnicodeBlock.setText(null);
         }
         mBtnPrev.setEnabled((mFocusPos > 0));
         mBtnNext.setEnabled((mFocusPos < mTextLen - 1));
