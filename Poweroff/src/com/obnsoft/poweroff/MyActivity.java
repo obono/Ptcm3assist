@@ -57,7 +57,9 @@ public class MyActivity extends PreferenceActivity {
         prefCount.setMinMax(3, 30);
 
         TextView textView = new TextView(this);
-        textView.setText(String.format(getString(R.string.msg_license), getVersion()));
+        textView.setText(String.format(getString(R.string.msg_about),
+                getString(R.string.app_code), getVersion()));
+        textView.setClickable(true);
         getListView().addFooterView(textView);
     }
 
