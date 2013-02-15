@@ -17,10 +17,14 @@
 package com.obnsoft.poweroff;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
+import android.widget.TextView;
 
 public class MyActivity extends PreferenceActivity {
 
@@ -48,9 +52,23 @@ public class MyActivity extends PreferenceActivity {
         });
 
         SeekBarPreference prefTilt = (SeekBarPreference) findPreference(PREFKEY_TILT);
+        prefTilt.setMinMax(3, 12);
         SeekBarPreference prefCount = (SeekBarPreference) findPreference(PREFKEY_COUNT);
-        prefTilt.setMinMax(3, 9);
-        prefCount.setMinMax(5, 20);
+        prefCount.setMinMax(3, 30);
+
+        TextView textView = new TextView(this);
+        textView.setText(String.format(getString(R.string.msg_license), getVersion()));
+        getListView().addFooterView(textView);
     }
 
+    private String getVersion() {
+        try {
+            PackageInfo packageInfo = getPackageManager().getPackageInfo(
+                    getPackageName(), PackageManager.GET_META_DATA);
+            return packageInfo.versionName;
+        } catch (NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 }
