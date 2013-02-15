@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tilt Power Off</string>
+    <string name="pref_service">Enable Service</string>
+    <string name="pref_tilt">Tilt level</string>
+    <string name="pref_count">Duration</string>
+    <string name="msg_no_su">The service could\'t be started because \"Superuser\" isn\'t installed.</string>
+</resources>
