@@ -1,3 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_code" translatable="false">OBN-Axx</string>
     <string name="app_name">プチコン3号補助アプリ</string>
+    <string name="activity_name_main">メインメニュー</string>
+    <string name="activity_name_command">命令表</string>
+    <string name="image" translatable="false">image</string>
+    <string name="label_list_loading">読み込み中</string>
+    <string name="label_explanations_header">説明</string>
+    <string name="label_forms_header">書式</string>
+    <string name="label_params_header">引数</string>
+    <string name="label_returns_header">戻り</string>
+    <string name="label_samples_header">サンプル</string>
+    <string name="label_notes_header">備考</string>
+    <string name="msg_downloading">ダウンロード中</string>
+    <string name="msg_download_failed">ダウンロードに失敗しました</string>
+    <string name="menu_sort_category">カテゴリ順にソート</string>
+    <string name="menu_sort_alphabet">アルファベット順にソート</string>
+    <string name="menu_about">バージョン情報</string>
 </resources>
