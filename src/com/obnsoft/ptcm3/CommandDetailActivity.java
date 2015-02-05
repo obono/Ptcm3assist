@@ -37,6 +37,6 @@ public class CommandDetailActivity extends Activity {
         MyApplication app = (MyApplication) getApplication();
         Display disp = getWindowManager().getDefaultDisplay();
         Command command = app.getCommandList().get(itemIndex);
-        setContentView(command.createView(this, findViewById(R.id.rootLayout), disp.getWidth()));
+        command.setupDetailViews(this, findViewById(R.id.rootLayout), disp.getWidth());
     }
 }

@@ -22,12 +22,10 @@ import java.io.InputStreamReader;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.os.AsyncTask;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -39,47 +37,14 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
-    /*-----------------------------------------------------------------------*/
-
-    private class MyAsyncTask extends AsyncTask<Void, Integer, Boolean> {
-        private Context         mContext;
-        private MyApplication   mApp;
-        private ProgressDialog  mDlg;
-        public MyAsyncTask(Context context, MyApplication app) {
-            mContext = context;
-            mApp = app;
-        }
-        @Override
-        protected void onPreExecute() {
-            mDlg = new ProgressDialog(mContext);
-            mDlg.setMessage(mContext.getText(R.string.msg_downloading));
-            mDlg.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            mDlg.show();
-        }
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            return mApp.downloadResources();
-        }
-        @Override
-        protected void onPostExecute(Boolean result) {
-            mDlg.dismiss();
-            if (!result) {
-                Toast.makeText(mContext, mContext.getText(R.string.msg_download_failed),
-                        Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-
-    /*-----------------------------------------------------------------------*/
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        MyApplication app = (MyApplication) getApplication();
+        final MyApplication app = (MyApplication) getApplication();
         if (!app.isHaveResources()) {
-            (new MyAsyncTask(this, app)).execute();
+            startDownloadTask();
         }
     }
 
@@ -101,8 +66,24 @@ public class MainActivity extends Activity {
 
     /*-----------------------------------------------------------------------*/
 
-    public void onClickActivityCommand(View v) {
+    public void onClickShowCommandList(View v) {
         startActivity(new Intent(this, CommandListActivity.class));
+    }
+
+    public void onClickShowSpdefList(View v) {
+        //startActivity(new Intent(this, CommandListActivity.class));
+    }
+
+    public void onClickShowBgList(View v) {
+        //startActivity(new Intent(this, CommandListActivity.class));
+    }
+
+    public void onClickGoToWebSite(View v) {
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(MyApplication.URL_BASE)));
+    }
+
+    public void onClickReloadResource(View v) {
+        startDownloadTask();
     }
 
     public void onClickAbout(View v) {
@@ -110,6 +91,25 @@ public class MainActivity extends Activity {
     }
 
     /*-----------------------------------------------------------------------*/
+
+    private void startDownloadTask() {
+        MyAsyncTaskWithDialog.ITask task = new MyAsyncTaskWithDialog.ITask() {
+            @Override
+            public Boolean task() {
+                MyApplication app = (MyApplication) getApplication();
+                return app.downloadResources();
+            }
+            @Override
+            public void post(Boolean result) {
+                if (!result) {
+                    Toast.makeText(MainActivity.this,
+                            MainActivity.this.getText(R.string.msg_download_failed),
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        };
+        MyAsyncTaskWithDialog.execute(this, R.string.msg_downloading, task);
+    }
 
     private void showVersion() {
         LayoutInflater inflater = LayoutInflater.from(this);

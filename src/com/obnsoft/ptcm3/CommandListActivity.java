@@ -32,6 +32,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class CommandListActivity extends ListActivity {
 
@@ -97,15 +98,7 @@ public class CommandListActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.command_list);
-
-        MyApplication app = (MyApplication) getApplication();
-        ArrayList<Command> commands = app.getCommandList();
-        ArrayList<MyItem> myItems = new ArrayList<MyItem>();
-        for (int i = 0, c = commands.size(); i < c; i++) {
-            Command command = commands.get(i);
-            myItems.add(new MyItem(i, command.getIndex(), command.getCategoryId()));
-        }
-        setListAdapter(new MyAdapter(this, myItems));
+        setListAdapter(new MyAdapter(this, new ArrayList<MyItem>()));
         getListView().setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
@@ -114,7 +107,29 @@ public class CommandListActivity extends ListActivity {
                 startActivity(intent);
             }
         });
-        sortListItems(SortType.CATEGORY);
+
+        final MyApplication app = (MyApplication) getApplication();
+        if (app.getCommandList() == null) {
+            MyAsyncTaskWithDialog.ITask task = new MyAsyncTaskWithDialog.ITask() {
+                @Override
+                public Boolean task() {
+                    return app.buildCommandList();
+                }
+                @Override
+                public void post(Boolean result) {
+                    if (result) {
+                        sortListItems(SortType.CATEGORY);
+                    } else {
+                        Toast.makeText(CommandListActivity.this,
+                                CommandListActivity.this.getText(R.string.msg_buildlist_failed),
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+            };
+            MyAsyncTaskWithDialog.execute(this, R.string.msg_buildlist, task);
+        } else {
+            sortListItems(SortType.CATEGORY);
+        }
     }
 
     @Override
@@ -152,29 +167,42 @@ public class CommandListActivity extends ListActivity {
 
         /* Remove section headers */
         MyAdapter adapter = (MyAdapter) getListAdapter();
-        for (int i = adapter.getCount() - 1; i >= 0; i--) {
-            MyItem item = adapter.getItem(i);
-            if (item.id == -1) {
-                adapter.remove(item);
+        MyApplication app = (MyApplication) getApplication();
+        boolean isInitial = (adapter.getCount() == 0);
+        if (isInitial) {
+            ArrayList<Command> commands = app.getCommandList();
+            for (int i = 0, c = commands.size(); i < c; i++) {
+                Command command = commands.get(i);
+                adapter.add(new MyItem(i, command.getIndex(), command.getCategoryId()));
+            }
+        } else {
+            for (int i = adapter.getCount() - 1; i >= 0; i--) {
+                MyItem item = adapter.getItem(i);
+                if (item.id == -1) {
+                    adapter.remove(item);
+                }
             }
         }
 
         /* Sort and insert section headers */
         switch (sortType) {
         case CATEGORY: // By categories
-            adapter.sort(new Comparator<MyItem>() {
-                @Override
-                public int compare(MyItem a, MyItem b) {
-                    return (int) (a.id - b.id);
-                }
-            });
-            MyApplication app = (MyApplication) getApplication();
+            if (!isInitial) {
+                adapter.sort(new Comparator<MyItem>() {
+                    @Override
+                    public int compare(MyItem a, MyItem b) {
+                        return (int) (a.id - b.id);
+                    }
+                });
+            }
             ArrayList<String> categories = app.getCategoryList();
-            int categoryId = categories.size() - 1;
-            for (int i = adapter.getCount() - 1; i >= 0; i--) {
-                if (i == 0 || adapter.getItem(i - 1).categoryId < categoryId) {
-                    adapter.insert(new MyItem(-1, categories.get(categoryId), -1), i);
-                    categoryId--;
+            if (categories != null) {
+                int categoryId = categories.size() - 1;
+                for (int i = adapter.getCount() - 1; i >= 0; i--) {
+                    if (i == 0 || adapter.getItem(i - 1).categoryId < categoryId) {
+                        adapter.insert(new MyItem(-1, categories.get(categoryId), -1), i);
+                        categoryId--;
+                    }
                 }
             }
             break;

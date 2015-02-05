@@ -8,7 +8,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/activity_name_command"
-        android:onClick="onClickActivityCommand"
+        android:onClick="onClickShowCommandList"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/activity_name_spdef"
+        android:onClick="onClickShowSpdefList"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/activity_name_bg"
+        android:onClick="onClickShowBgList"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/menu_goto_website"
+        android:onClick="onClickGoToWebSite"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/menu_reload_resources"
+        android:onClick="onClickReloadResource"
         />
     <Button
         android:layout_width="match_parent"
