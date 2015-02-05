@@ -97,7 +97,7 @@ public class Command {
         return mCategoryId;
     }
 
-    public View createView(Context context, View rootView, int screenWidth) {
+    public View setupDetailViews(Context context, View rootView, int screenWidth) {
         TextView tv;
         TableLayout tl;
 

@@ -32,7 +32,9 @@ import org.jsoup.nodes.Element;
 import android.app.Application;
 
 public class MyApplication extends Application {
-    private static final String URL_BASE = "http://smileboom.com/special/ptcm3/";
+
+    public static final String URL_BASE = "http://smileboom.com/special/ptcm3/";
+
     private static final String URL_CMD_HTML = URL_BASE + "reference/index.php";
     private static final String URL_SPU_PNG = URL_BASE + "image/ss-story-attachment-1.png";
     private static final String URL_BG_PNG = URL_BASE + "image/ss-story-attachment-2.png";
@@ -75,23 +77,24 @@ public class MyApplication extends Application {
     }
 
     public boolean downloadResources() {
+        mCommands = null;
+        mCategories = null;
         return (downloadFile(URL_CMD_HTML, FNAME_CMD_HTML) &&
                 downloadFile(URL_SPU_PNG, FNAME_SPU_PNG) &&
                 downloadFile(URL_BG_PNG, FNAME_BG_PNG));
     }
 
     public ArrayList<Command> getCommandList() {
-        if (mCommands == null) {
-            parseCommandHtml();
-        }
         return mCommands;
     }
 
     public ArrayList<String> getCategoryList() {
-        if (mCategories == null) {
-            parseCommandHtml();
-        }
         return mCategories;
+    }
+
+    public boolean buildCommandList() {
+        parseCommandHtml();
+        return (mCommands != null && mCategories != null);
     }
 
     /*-----------------------------------------------------------------------*/
@@ -140,6 +143,8 @@ public class MyApplication extends Application {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            mCommands = null;
+            mCategories = null;
         }
     }
 }
