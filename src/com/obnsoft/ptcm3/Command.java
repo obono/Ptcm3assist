@@ -97,7 +97,8 @@ public class Command {
         return mCategoryId;
     }
 
-    public View setupDetailViews(Context context, View rootView, int screenWidth) {
+    public View setupDetailViews(Context context, int layoutResId, int screenWidth) {
+        View rootView = View.inflate(context, layoutResId, null);
         TextView tv;
         TableLayout tl;
 
