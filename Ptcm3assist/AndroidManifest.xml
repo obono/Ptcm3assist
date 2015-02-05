@@ -34,6 +34,9 @@
             android:name="CommandDetailActivity"
             android:label="@string/activity_name_command"
             />
+        <activity
+            android:name="CharacterListActivity"
+            />
     </application>
 
 </manifest>
