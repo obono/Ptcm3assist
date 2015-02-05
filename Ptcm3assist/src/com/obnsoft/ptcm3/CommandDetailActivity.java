@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Display;
+import android.view.View;
 
 public class CommandDetailActivity extends Activity {
 
@@ -28,15 +29,17 @@ public class CommandDetailActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.command_detail);
+
         Intent intent = getIntent();
         int itemIndex = 0;
         if (intent != null) {
             itemIndex = intent.getIntExtra(INTENT_EXT_INDEX, 0);
         }
+
         MyApplication app = (MyApplication) getApplication();
         Display disp = getWindowManager().getDefaultDisplay();
         Command command = app.getCommandList().get(itemIndex);
-        command.setupDetailViews(this, findViewById(R.id.rootLayout), disp.getWidth());
+        View contentView = command.setupDetailViews(this, R.layout.command_detail, disp.getWidth());
+        setContentView(contentView);
     }
 }

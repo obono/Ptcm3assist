@@ -63,7 +63,7 @@ public class CommandListActivity extends ListActivity {
             if (itemView == null) {
                 itemView = View.inflate(getContext(), R.layout.command_list_item, null);
                 holder = new MyViewHolder();
-                holder.tv = (TextView) itemView.findViewById(R.id.listItemIndex);
+                holder.tv = (TextView) itemView.findViewById(R.id.text_listitem_index);
                 itemView.setTag(holder);
             } else {
                 holder = (MyViewHolder) itemView.getTag();

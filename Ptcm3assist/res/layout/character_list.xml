@@ -7,10 +7,10 @@
         android:id="@+id/grid_character_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:columnWidth="36dp"
         android:numColumns="auto_fit"
-        android:horizontalSpacing="8dip"
-        android:verticalSpacing="8dip"
+        android:horizontalSpacing="8dp"
+        android:verticalSpacing="8dp"
         android:gravity="center"
         />
-
 </RelativeLayout>
