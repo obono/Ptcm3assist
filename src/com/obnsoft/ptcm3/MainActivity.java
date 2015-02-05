@@ -28,8 +28,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -48,22 +46,6 @@ public class MainActivity extends Activity {
         }
     }
 
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-        case R.id.menu_about:
-            showVersion();
-            return true;
-        }
-        return false;
-    }*/
-
     /*-----------------------------------------------------------------------*/
 
     public void onClickShowCommandList(View v) {
@@ -71,11 +53,15 @@ public class MainActivity extends Activity {
     }
 
     public void onClickShowSpdefList(View v) {
-        //startActivity(new Intent(this, CommandListActivity.class));
+        Intent intent = new Intent(this, CharacterListActivity.class);
+        intent.putExtra(CharacterListActivity.INTENT_EXT_MODE, CharacterListActivity.MODE_SPDEF);
+        startActivity(intent);
     }
 
     public void onClickShowBgList(View v) {
-        //startActivity(new Intent(this, CommandListActivity.class));
+        Intent intent = new Intent(this, CharacterListActivity.class);
+        intent.putExtra(CharacterListActivity.INTENT_EXT_MODE, CharacterListActivity.MODE_BG);
+        startActivity(intent);
     }
 
     public void onClickGoToWebSite(View v) {

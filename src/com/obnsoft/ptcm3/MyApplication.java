@@ -30,6 +30,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import android.app.Application;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 public class MyApplication extends Application {
 
@@ -97,6 +99,14 @@ public class MyApplication extends Application {
         return (mCommands != null && mCategories != null);
     }
 
+    public Bitmap getSpriteCharacterImage() {
+        return loadImageFile(FNAME_SPU_PNG);
+    }
+
+    public Bitmap getBgCharacterImage() {
+        return loadImageFile(FNAME_BG_PNG);
+    }
+
     /*-----------------------------------------------------------------------*/
 
     private boolean downloadFile(String url, String fileName) {
@@ -147,4 +157,18 @@ public class MyApplication extends Application {
             mCategories = null;
         }
     }
+
+    private Bitmap loadImageFile(String fileName) {
+        Bitmap bitmap = null;
+        try {
+            InputStream in = openFileInput(fileName);
+            bitmap = BitmapFactory.decodeStream(in);
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            bitmap = null;
+        }
+        return bitmap;
+    }
+
 }
