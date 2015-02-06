@@ -60,3 +60,5 @@
 
 -dontwarn com.google.android.gms.**
 -dontwarn android.support.v4.**
+
+-keep class org.jsoup.**
