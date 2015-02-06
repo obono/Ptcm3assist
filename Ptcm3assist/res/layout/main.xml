@@ -6,43 +6,51 @@
     >
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         >
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/activity_name_command"
+            android:drawableLeft="@drawable/ic_command"
             android:onClick="onClickShowCommandList"
             />
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/activity_name_spdef"
+            android:drawableLeft="@drawable/ic_spdef"
             android:onClick="onClickShowSpdefList"
             />
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/activity_name_bg"
+            android:drawableLeft="@drawable/ic_bg"
             android:onClick="onClickShowBgList"
             />
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/menu_goto_website"
+            android:drawableLeft="@drawable/ic_website"
             android:onClick="onClickGoToWebSite"
             />
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/menu_reload_resources"
+            android:drawableLeft="@drawable/ic_download"
             android:onClick="onClickReloadResource"
             />
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/menu_about"
+            android:drawableLeft="@drawable/ic_about"
             android:onClick="onClickAbout"
             />
     </LinearLayout>

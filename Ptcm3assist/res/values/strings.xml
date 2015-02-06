@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_code" translatable="false">OBN-Axx</string>
+    <string name="app_code" translatable="false">OBN-A17</string>
     <string name="app_name">プチコン3号補助アプリ</string>
     <string name="activity_name_main">メインメニュー</string>
     <string name="activity_name_command">命令表</string>
@@ -14,13 +14,13 @@
     <string name="label_returns_header">戻り</string>
     <string name="label_samples_header">サンプル</string>
     <string name="label_notes_header">備考</string>
-    <string name="fmt_chrinfo_spdef">定義番号: %d\nソース: (%d,%d) %dx%d\n原点: (%d,%d)\nアトリビュート: %d</string>
-    <string name="fmt_chrinfo_bg">キャラ番号: %d\nソース: (%d,%d) 16x16</string>
-    <string name="msg_downloading">ダウンロード中</string>
+    <string name="fmt_chrinfo_spdef" formatted="false">定義番号: %d\nソース: (%d,%d) %dx%d\n原点: (%d,%d)\nアトリビュート: %d</string>
+    <string name="fmt_chrinfo_bg" formatted="false">キャラ番号: %d\nソース: (%d,%d) 16x16</string>
+    <string name="msg_downloading">ダウンロード中&#8230;</string>
     <string name="msg_download_failed">ダウンロードに失敗しました</string>
-    <string name="msg_download_confirm">プチコン3号公式ウェブサイトから、必要なファイルをダウンロードします。</string>
-    <string name="msg_buildlist">リスト構築中</string>
-    <string name="msg_buildlist_failed">リスト構築に失敗しました</string>
+    <string name="msg_download_confirm">プチコン3号公式ウェブサイトから、必要なデータをダウンロードします。</string>
+    <string name="msg_buildlist">命令表を構築中&#8230;</string>
+    <string name="msg_buildlist_failed">命令表の構築に失敗しました</string>
     <string name="menu_sort_category">カテゴリ順にソート</string>
     <string name="menu_sort_alphabet">アルファベット順にソート</string>
     <string name="menu_goto_website">プチコン3号公式ウェブサイト</string>

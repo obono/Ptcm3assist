@@ -45,6 +45,7 @@
         android:layout_height="match_parent"
         android:layout_toRightOf="@id/chrview_focused"
         android:layout_alignParentRight="true"
+        android:fastScrollEnabled="true"
         android:columnWidth="36dp"
         android:numColumns="auto_fit"
         android:horizontalSpacing="8dp"
