@@ -5,16 +5,16 @@
     >
     <com.obnsoft.ptcm3.CharacterView
         android:id="@+id/chrview_focused"
-        android:layout_width="match_parent"
-        android:layout_height="192dp"
-        android:layout_alignParentTop="true"
+        android:layout_width="192dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
         />
     <FrameLayout
         android:id="@+id/shape_cross"
         android:layout_width="96dp"
         android:layout_height="96dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="48dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="48dp"
         >
         <View
             android:layout_width="match_parent"
@@ -43,8 +43,8 @@
         android:id="@+id/grid_character_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/chrview_focused"
-        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/chrview_focused"
+        android:layout_alignParentRight="true"
         android:columnWidth="36dp"
         android:numColumns="auto_fit"
         android:horizontalSpacing="8dp"

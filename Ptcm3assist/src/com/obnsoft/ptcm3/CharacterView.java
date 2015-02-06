@@ -27,14 +27,41 @@ import android.view.View;
 
 public class CharacterView extends View {
 
-    private static float sSize;
+    public static class Params {
+        int id, srcX, srcY;
+        byte width, height, homeX, homeY, attr;
+        public Params(int id, int srcX, int srcY) {
+            this.id = id;
+            this.srcX = srcX;
+            this.srcY = srcY;
+            this.width = 16;
+            this.height = 16;
+            this.homeX = 8;
+            this.homeY = 8;
+            this.attr = 1;
+        }
+        public Params(int id, int srcX, int srcY, byte width, byte height,
+                byte homeX, byte homeY, byte attr) {
+            this.id = id;
+            this.srcX = srcX;
+            this.srcY = srcY;
+            this.width = width;
+            this.height = height;
+            this.homeX = homeX;
+            this.homeY = homeY;
+            this.attr = attr;
+        }
+    }
+
+    /*-----------------------------------------------------------------------*/
+
     private static Paint sPaint;
     private static Bitmap sBitmap;
 
-    private Matrix mMatrix;
-    private RectF mClipRect;
-    private int mHomeX;
-    private int mHomeY;
+    private boolean mToAdjust;
+    private Params mParams;
+    private Matrix mMatrix = new Matrix();
+    private RectF mClipRect = new RectF();
 
     public static void bindBitmap(Bitmap bitmap) {
         sBitmap = bitmap;
@@ -53,56 +80,74 @@ public class CharacterView extends View {
 
     public CharacterView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        if (sSize == 0) {
-            sSize = (int) (32f * context.getResources().getDisplayMetrics().density);
-        }
     }
 
-    public void setParams(int srcX, int srcY, int width, int height,
-            int homeX, int homeY, int attr) {
-        /* Translate */
-        mMatrix = new Matrix();
-        mMatrix.postTranslate(-srcX, -srcY);
-
-        /* Flip */
-        float w2 = width / 2f, h2 = height / 2f;
-        mMatrix.postScale(((attr & 8) != 0) ? -1 : 1, ((attr & 16) != 0) ? -1 : 1, w2, h2);
-
-        /* Rotate */
-        mMatrix.postRotate(((attr & 4) != 0) ? 180 : 0, w2, h2);
-        if ((attr & 2) != 0) {
-            if (width > height) {
-                mMatrix.postRotate(90, h2, h2);
-            } else {
-                mMatrix.postRotate(90, w2, w2);
-                mMatrix.postTranslate(height - width, 0);
-            }
-            int tmp = width; width = height; height = tmp;
-        }
-
-        /* Scale */
-        float scaleX = Math.min(sSize / 16, sSize / width);
-        float scaleY = Math.min(sSize / 16, sSize / height);
-        mMatrix.postScale(scaleX, scaleY);
-        if (width * scaleX < sSize || height * scaleY < sSize) {
-            mClipRect = new RectF(0f, 0f, width * scaleX, height * scaleY);
-        } else {
-            mClipRect = null;
-        }
-
-        mHomeX = homeX;
-        mHomeY = homeY;
+    public void setParams(Params params) {
+        mParams = params;
+        mToAdjust = true;
     }
 
     @Override
     public void draw(Canvas canvas) {
         if (sBitmap != null) {
-            if (mClipRect != null) {
-                canvas.drawRect(0, 0, sSize, sSize, sPaint);
+            int width = getWidth();
+            int height = getHeight();
+            if (mToAdjust) {
+                setDrawMatrix(width, height);
+                mToAdjust = false;
+            }
+            if (mClipRect.bottom != -1) {
+                canvas.drawPaint(sPaint);
                 canvas.clipRect(mClipRect);
             }
-            canvas.drawBitmap(sBitmap, mMatrix, null);
+            canvas.drawBitmap(sBitmap, mMatrix, sPaint);
         }
     }
 
+    /*-----------------------------------------------------------------------*/
+
+    private void setDrawMatrix(int width, int height) {
+
+        /* Translate */
+        mMatrix.setTranslate(-mParams.srcX, -mParams.srcY);
+
+        /* Flip */
+        float w1 = mParams.width, h1 = mParams.height;
+        float w2 = w1 / 2f, h2 = h1 / 2f;
+        mMatrix.postScale(((mParams.attr & 8) != 0) ? -1 : 1,
+                ((mParams.attr & 16) != 0) ? -1 : 1, w2, h2);
+
+        /* Rotate */
+        mMatrix.postRotate(((mParams.attr & 4) != 0) ? 180 : 0, w2, h2);
+        if ((mParams.attr & 2) != 0) {
+            if (w1 > h1) {
+                mMatrix.postRotate(90, h2, h2);
+            } else {
+                mMatrix.postRotate(90, w2, w2);
+                mMatrix.postTranslate(h1 - w1, 0);
+            }
+            float tmp = w1; w1 = h1; h1 = tmp;
+        }
+
+        /* Scale */
+        float density = getContext().getResources().getDisplayMetrics().density;
+        if (getId() == R.id.chrview_focused) {
+            float scale = 4f * density;
+            float drawX = width / 2 - mParams.homeX * scale;
+            float drawY = height / 2 - mParams.homeY * scale;
+            mMatrix.postScale(scale, scale);
+            mMatrix.postTranslate(drawX, drawY);
+            mClipRect.set(drawX, drawY, drawX + w1 * scale, drawY + h1 * scale);
+        } else {
+            float scale = 2f * density;
+            float drawWidth = Math.min(w1 * scale, width);
+            float drawHeight = Math.min(h1 * scale, height);
+            mMatrix.postScale(drawWidth / w1, drawHeight / h1);
+            if (drawWidth < width || drawHeight < height) {
+                mClipRect.set(0f, 0f, drawWidth, drawHeight);
+            } else {
+                mClipRect.set(-1, -1, -1, -1);
+            }
+        }
+    }
 }
