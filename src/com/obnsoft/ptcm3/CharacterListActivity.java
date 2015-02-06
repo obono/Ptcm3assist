@@ -16,10 +16,8 @@
 
 package com.obnsoft.ptcm3;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -38,46 +36,20 @@ import android.widget.TextView;
 public class CharacterListActivity extends Activity {
 
     public static final String INTENT_EXT_MODE = "mode";
+    public static final int MODE_UNKNOWN = 0;
     public static final int MODE_SPDEF = 1;
     public static final int MODE_BG = 2;
 
     /*-----------------------------------------------------------------------*/
 
-    private class MyItem {
-        int id, srcX, srcY, width, height, homeX, homeY, attr;
-        public MyItem(int id, int srcX, int srcY, int width, int height,
-                int homeX, int homeY, int attr) {
-            this.id = id;
-            this.srcX = srcX;
-            this.srcY = srcY;
-            this.width = width;
-            this.height = height;
-            this.homeX = homeX;
-            this.homeY = homeY;
-            this.attr = attr;
-        }
-        public MyItem(int id, String cvs) {
-            String[] ary = cvs.split(",");
-            Integer.parseInt(ary[0]);
-            this.id = id;
-            this.srcX = Integer.parseInt(ary[0]);
-            this.srcY = Integer.parseInt(ary[1]);
-            this.width = Integer.parseInt(ary[2]);
-            this.height = Integer.parseInt(ary[3]);
-            this.homeX = Integer.parseInt(ary[4]);
-            this.homeY = Integer.parseInt(ary[5]);
-            this.attr = Integer.parseInt(ary[6]);
-        }
-    }
-
     private class MyViewHolder {
-        public CharacterView cv;
-        public TextView tv;
+        CharacterView cv;
+        TextView tv;
     }
 
-    private class MyAdapter extends ArrayAdapter<MyItem> {
-        public MyAdapter(Context context, ArrayList<MyItem> myItems) {
-            super(context, 0, myItems);
+    private class MyAdapter extends ArrayAdapter<CharacterView.Params> {
+        public MyAdapter(Context context, ArrayList<CharacterView.Params> aryParams) {
+            super(context, 0, aryParams);
         }
         @Override
         public View getView(int position, View itemView, ViewGroup parent) {
@@ -91,74 +63,62 @@ public class CharacterListActivity extends Activity {
             } else {
                 holder = (MyViewHolder) itemView.getTag();
             }
-            MyItem myItem = (MyItem) getItem(position);
-            holder.cv.setParams(myItem.srcX, myItem.srcY, myItem.width, myItem.height,
-                    myItem.homeX, myItem.homeY, myItem.attr);
-            holder.tv.setText(String.valueOf(myItem.id));
-            itemView.setBackgroundColor((position == mSelectPos) ?
-                    Color.argb(128, 255, 255, 0) : Color.TRANSPARENT);
+            CharacterView.Params params = (CharacterView.Params) getItem(position);
+            holder.cv.setParams(params);
+            holder.tv.setText(String.valueOf(params.id));
+            holder.tv.setBackgroundColor((position == mSelectPos) ?
+                    Color.argb(128, 64, 64, 255) : Color.TRANSPARENT);
             return itemView;
         }
     }
 
     /*-----------------------------------------------------------------------*/
 
-    private int mMode;
     private int mSelectPos = 0;
-
-    private MyAdapter mAdapter;
-    private GridView mGridView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.character_list);
 
-        ArrayList<MyItem> myItems = new ArrayList<MyItem>();
         Intent intent = getIntent();
+        final int mode;
         if (intent != null) {
-            mMode = intent.getIntExtra(INTENT_EXT_MODE, 0);
+            mode = intent.getIntExtra(INTENT_EXT_MODE, MODE_UNKNOWN);
             MyApplication app = (MyApplication) getApplication();
-            switch (mMode) {
+            switch (mode) {
             case MODE_SPDEF:
                 setTitle(R.string.activity_name_spdef);
                 CharacterView.bindBitmap(app.getSpriteCharacterImage());
-                try {
-                    InputStream in = getResources().openRawResource(R.raw.spdef);
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                    int i = 0;
-                    String str;
-                    while((str = reader.readLine()) != null) {
-                        myItems.add(new MyItem(i++, str));
-                        if (i == 1482) i = 2048;
-                        if (i == 3529) i = 4095;
-                    }
-                    in.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
                 break;
             case MODE_BG:
                 setTitle(R.string.activity_name_bg);
                 CharacterView.bindBitmap(app.getBgCharacterImage());
-                for (int i = 0; i < 1024; i++) {
-                    myItems.add(new MyItem(i, i % 32 * 16, i / 32 * 16, 16, 16, 0, 0, 1));
-                }
+                findViewById(R.id.shape_cross).setVisibility(View.INVISIBLE);
                 break;
             }
+        } else {
+            mode = MODE_UNKNOWN;
         }
 
-        mAdapter = new MyAdapter(this, myItems);
-        mGridView = (GridView) findViewById(R.id.grid_character_list);
-        mGridView.setAdapter(mAdapter);
-        mGridView.setOnItemClickListener(new OnItemClickListener() {
+        final MyAdapter adapter = new MyAdapter(this, generateAdapterItems(mode));
+        final TextView textView = (TextView) findViewById(R.id.text_chrinfo);
+        final CharacterView characterView = (CharacterView) findViewById(R.id.chrview_focused);
+        OnItemClickListener listener = new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
                 mSelectPos = pos;
-                mAdapter.notifyDataSetChanged();
+                CharacterView.Params params = adapter.getItem(mSelectPos);
+                textView.setText(generateCharacterInfo(mode, params));
+                characterView.setParams(params);
+                characterView.invalidate();
+                adapter.notifyDataSetChanged();
             }
-        });
-        mGridView.setSelection(mSelectPos);
+        };
+        GridView gridView = (GridView) findViewById(R.id.grid_character_list);
+        gridView.setAdapter(adapter);
+        gridView.setOnItemClickListener(listener);
+        listener.onItemClick(null, null, mSelectPos, 0);
     }
 
     @Override
@@ -167,4 +127,46 @@ public class CharacterListActivity extends Activity {
         CharacterView.unbindBitmap();
     }
 
+    /*-----------------------------------------------------------------------*/
+
+    private ArrayList<CharacterView.Params> generateAdapterItems(int mode) {
+        ArrayList<CharacterView.Params> aryParams = new ArrayList<CharacterView.Params>();
+        switch (mode) {
+        case MODE_SPDEF:
+            try {
+                InputStream in = getResources().openRawResource(R.raw.spdef);
+                int i = 0;
+                byte[] buf = new byte[8];
+                while(in.read(buf) != -1) {
+                    aryParams.add(new CharacterView.Params(i++, buf[0] * 8, buf[1] * 8,
+                            buf[2], buf[3], buf[4], buf[5], buf[6]));
+                    if (i == 1482) i = 2048;
+                    if (i == 3529) i = 4095;
+                }
+                in.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            break;
+        case MODE_BG:
+            for (int i = 0; i < 1024; i++) {
+                aryParams.add(new CharacterView.Params(i, i % 32 * 16, i / 32 * 16));
+            }
+            break;
+        }
+        return aryParams;
+    }
+
+    private String generateCharacterInfo(int mode, CharacterView.Params params) {
+        switch (mode) {
+        case MODE_SPDEF:
+            return String.format(getString(R.string.fmt_chrinfo_spdef),
+                    params.id, params.srcX, params.srcY, params.width, params.height,
+                    params.homeX, params.homeY, params.attr);
+        case MODE_BG:
+            return String.format(getString(R.string.fmt_chrinfo_bg),
+                    params.id, params.srcX, params.srcY);
+        }
+        return null;
+    }
 }

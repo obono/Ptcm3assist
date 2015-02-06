@@ -29,11 +29,9 @@ import android.widget.TextView;
 
 public class Command {
 
-    /*-----------------------------------------------------------------------*/
-
-    class StringPair {
-        public String first;
-        public String second;
+    private class StringPair {
+        String first;
+        String second;
         public StringPair(Element trElement) {
             Elements children = trElement.children();
             this.first = br2cr(children.get(1));
