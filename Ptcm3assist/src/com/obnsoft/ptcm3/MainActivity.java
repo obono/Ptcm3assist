@@ -22,6 +22,7 @@ import java.io.InputStreamReader;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -69,7 +70,17 @@ public class MainActivity extends Activity {
     }
 
     public void onClickReloadResource(View v) {
-        startDownloadTask();
+        new AlertDialog.Builder(this)
+        .setIcon(android.R.drawable.ic_dialog_alert)
+        .setTitle(R.string.menu_reload_resources)
+        .setMessage(R.string.msg_download_confirm)
+        .setNegativeButton(android.R.string.cancel, null)
+        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startDownloadTask();
+            }
+        }).show();
     }
 
     public void onClickAbout(View v) {

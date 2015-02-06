@@ -18,6 +18,7 @@
     <string name="fmt_chrinfo_bg">キャラ番号: %d\nソース: (%d,%d) 16x16</string>
     <string name="msg_downloading">ダウンロード中</string>
     <string name="msg_download_failed">ダウンロードに失敗しました</string>
+    <string name="msg_download_confirm">プチコン3号公式ウェブサイトから、必要なファイルをダウンロードします。</string>
     <string name="msg_buildlist">リスト構築中</string>
     <string name="msg_buildlist_failed">リスト構築に失敗しました</string>
     <string name="menu_sort_category">カテゴリ順にソート</string>
