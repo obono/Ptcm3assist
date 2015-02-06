@@ -74,6 +74,8 @@ public class CharacterListActivity extends Activity {
 
     /*-----------------------------------------------------------------------*/
 
+    private static final String STATEKEY_POSITION = "position";
+
     private int mSelectPos = 0;
 
     @Override
@@ -102,8 +104,9 @@ public class CharacterListActivity extends Activity {
         }
 
         final MyAdapter adapter = new MyAdapter(this, generateAdapterItems(mode));
-        final TextView textView = (TextView) findViewById(R.id.text_chrinfo);
         final CharacterView characterView = (CharacterView) findViewById(R.id.chrview_focused);
+        final TextView textView = (TextView) findViewById(R.id.text_chrinfo);
+        final GridView gridView = (GridView) findViewById(R.id.grid_character_list);
         OnItemClickListener listener = new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
@@ -115,10 +118,18 @@ public class CharacterListActivity extends Activity {
                 adapter.notifyDataSetChanged();
             }
         };
-        GridView gridView = (GridView) findViewById(R.id.grid_character_list);
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(listener);
+
+        if (savedInstanceState != null) {
+            mSelectPos = savedInstanceState.getInt(STATEKEY_POSITION);
+        }
         listener.onItemClick(null, null, mSelectPos, 0);
+    }
+
+    @Override protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(STATEKEY_POSITION, mSelectPos);
     }
 
     @Override
