@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_code" translatable="false">OBN-A17</string>
-    <string name="app_name">プチコン3号補助アプリ</string>
+    <string name="app_code">OBN-A17</string>
+    <string name="app_name">すまべぇアシスト</string>
     <string name="activity_name_main">メインメニュー</string>
     <string name="activity_name_command">命令表</string>
     <string name="activity_name_spdef">標準スプライト定義一覧表</string>
     <string name="activity_name_bg">標準BGキャラ一覧表</string>
-    <string name="image" translatable="false">image</string>
+    <string name="image">image</string>
     <string name="label_noitem">項目なし</string>
     <string name="label_explanations_header">説明</string>
     <string name="label_forms_header">書式</string>

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     >
     <TextView
-        android:id="@+id/textIndex"
+        android:id="@+id/text_index"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -16,7 +16,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textIndex"
+        android:layout_below="@+id/text_index"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"

@@ -46,6 +46,7 @@
         android:layout_below="@id/chrview_focused"
         android:layout_alignParentBottom="true"
         android:fastScrollEnabled="true"
+        android:requiresFadingEdge="vertical"
         android:columnWidth="36dp"
         android:numColumns="auto_fit"
         android:horizontalSpacing="8dp"
