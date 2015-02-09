@@ -101,7 +101,7 @@ public class Command {
         TableLayout tl;
 
         /* Index */
-        tv = (TextView) rootView.findViewById(R.id.textIndex);
+        tv = (TextView) rootView.findViewById(R.id.text_index);
         tv.setText(mIndex);
 
         /* Explanation */
