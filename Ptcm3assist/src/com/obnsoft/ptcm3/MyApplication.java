@@ -46,7 +46,7 @@ public class MyApplication extends Application {
 
     private static final String ID_CONTENTAREA = "contentarea";
     private static final String TAG_TABLE = "table";
-    private static final String CLASS_HEAD = "head";
+    private static final String TAG_H3 = "h3";
 
     private ArrayList<Command> mCommands;
     private ArrayList<String> mCategories;
@@ -145,10 +145,10 @@ public class MyApplication extends Application {
                 if (e.tagName().equals(TAG_TABLE)) {
                     if (e.className().equals("")) {
                         mCommands.add(new Command(e, categoryId));
-                    } else if (e.className().equals(CLASS_HEAD)) {
-                        mCategories.add(e.child(0).text());
-                        categoryId++;
                     }
+                } else if (e.tagName().equals(TAG_H3)) {
+                    mCategories.add(e.text());
+                    categoryId++;
                 }
             }
         } catch (IOException e) {

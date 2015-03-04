@@ -72,6 +72,9 @@ public class Command {
                     if (className.equals(CLASS_FORM)) {
                         Elements children = element2.children();
                         mForms.add(br2cr(element2.child((children.size() == 1) ? 0 : 1)));
+                        if (mIndex == null) {
+                            mIndex = br2cr(element2.child(0));
+                        }
                     } else if (className.equals(CLASS_PARAMETER)) {
                         mParams.add(new StringPair(element2));
                     } else if (className.equals(CLASS_RETURN)) {
@@ -105,12 +108,23 @@ public class Command {
         tv.setText(mIndex);
 
         /* Explanation */
-        tv = (TextView) rootView.findViewById(R.id.text_explanation_first);
-        tv.setVisibility((mExplanation.first.length() > 0) ? View.VISIBLE : View.GONE);
-        tv.setText(mExplanation.first);
-        tv = (TextView) rootView.findViewById(R.id.text_explanation_second);
-        tv.setVisibility((mExplanation.second.length() > 0) ? View.VISIBLE : View.GONE);
-        tv.setText(mExplanation.second);
+        if (mExplanation != null) {
+            tv = (TextView) rootView.findViewById(R.id.text_explanation_header);
+            tv.setVisibility(View.VISIBLE);
+            tv = (TextView) rootView.findViewById(R.id.text_explanation_first);
+            tv.setVisibility((mExplanation.first.length() > 0) ? View.VISIBLE : View.GONE);
+            tv.setText(mExplanation.first);
+            tv = (TextView) rootView.findViewById(R.id.text_explanation_second);
+            tv.setVisibility((mExplanation.second.length() > 0) ? View.VISIBLE : View.GONE);
+            tv.setText(mExplanation.second);
+        } else {
+            tv = (TextView) rootView.findViewById(R.id.text_explanation_header);
+            tv.setVisibility(View.GONE);
+            tv = (TextView) rootView.findViewById(R.id.text_explanation_first);
+            tv.setVisibility(View.GONE);
+            tv = (TextView) rootView.findViewById(R.id.text_explanation_second);
+            tv.setVisibility(View.GONE);
+        }
 
         /* Forms */
         tv = (TextView) rootView.findViewById(R.id.text_forms_header);
@@ -144,7 +158,7 @@ public class Command {
 
     private String br2cr(Element e) {
         e.select("br").append("\\n");
-        return e.text().replaceAll("\\\\n", "\n");
+        return e.text().concat(" ").replaceAll("\\\\n ", "\n");
     }
 
     private void setup1ColumnTableLayout(
