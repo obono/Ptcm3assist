@@ -196,7 +196,7 @@ public class CommandListActivity extends ListActivity {
                 });
             }
             ArrayList<String> categories = app.getCategoryList();
-            if (categories != null) {
+            if (categories != null && categories.size() > 0) {
                 int categoryId = categories.size() - 1;
                 for (int i = adapter.getCount() - 1; i >= 0; i--) {
                     if (i == 0 || adapter.getItem(i - 1).categoryId < categoryId) {

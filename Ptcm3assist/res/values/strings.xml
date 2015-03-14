@@ -6,6 +6,8 @@
     <string name="activity_name_command">命令表</string>
     <string name="activity_name_spdef">標準スプライト定義一覧表</string>
     <string name="activity_name_bg">標準BGキャラ一覧表</string>
+    <string name="activity_name_unicode">文字コードチェッカー</string>
+    <string name="activity_name_qr">QRコードスキャナー</string>
     <string name="image">image</string>
     <string name="label_noitem">項目なし</string>
     <string name="label_explanations_header">説明</string>
@@ -14,6 +16,10 @@
     <string name="label_returns_header">戻り</string>
     <string name="label_samples_header">サンプル</string>
     <string name="label_notes_header">備考</string>
+    <string name="label_unicode_prev">&#x25C0;</string>
+    <string name="label_unicode_next">&#x25B6;</string>
+    <string name="label_unicode_source">文字列を入力</string>
+    <string name="label_unicode_detail">文字コード情報</string>
     <string name="fmt_chrinfo_spdef" formatted="false">定義番号: %d\nソース: (%d,%d) %dx%d\n原点: (%d,%d)\nアトリビュート: %d</string>
     <string name="fmt_chrinfo_bg" formatted="false">キャラ番号: %d\nソース: (%d,%d) 16x16</string>
     <string name="msg_downloading">ダウンロード中&#8230;</string>
@@ -21,8 +27,13 @@
     <string name="msg_download_confirm">プチコン3号公式ウェブサイトから、必要なデータをダウンロードします。</string>
     <string name="msg_buildlist">命令表を構築中&#8230;</string>
     <string name="msg_buildlist_failed">命令表の構築に失敗しました</string>
+    <string name="msg_unicode_share_failed">アプリ起動に失敗しました</string>
     <string name="menu_sort_category">カテゴリ順にソート</string>
     <string name="menu_sort_alphabet">アルファベット順にソート</string>
+    <string name="menu_unicode_10comma">10進数カンマ区切り</string>
+    <string name="menu_unicode_16comma">&amp;H16進数カンマ区切り</string>
+    <string name="menu_unicode_16fix">4桁16進数連結</string>
+    <string name="menu_unicode_share">共有</string>
     <string name="menu_goto_website">プチコン3号公式ウェブサイト</string>
     <string name="menu_reload_resources">データの更新(再ダウンロード)</string>
     <string name="menu_about">バージョン情報</string>
