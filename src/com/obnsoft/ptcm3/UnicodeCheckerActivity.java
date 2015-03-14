@@ -136,7 +136,6 @@ public class UnicodeCheckerActivity extends Activity {
         mBtnNext = (Button) findViewById(R.id.btn_unicode_next);
         mEditTextSource.addTextChangedListener(mTextWatcher);
         mEditTextSource.setOnFocusChangeListener(mOnFocusChangeListener);
-        updateViews();
     }
 
     @Override
@@ -164,6 +163,21 @@ public class UnicodeCheckerActivity extends Activity {
             return true;
         }
         return false;
+    }
+
+    
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateViews();
+    }
+
+    @Override
+    protected void onPause() {
+        if (mEditableSource != null) {
+            mEditableSource.removeSpan(mEmphasis);
+        }
+        super.onPause();
     }
 
     /*----------------------------------------------------------------------*/
