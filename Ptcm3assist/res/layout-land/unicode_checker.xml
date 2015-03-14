@@ -45,11 +45,10 @@
         android:singleLine="true"
         android:hint="@string/label_unicode_source"
         />
-    <com.obnsoft.ptcm3.WrapTextView
+    <TextView
         android:id="@+id/text_unicode_encoded"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/edittext_unicode_source"
-        android:textSize="12sp"
         />
 </RelativeLayout>
