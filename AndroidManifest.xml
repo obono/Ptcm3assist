@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.obnsoft.ptcm3"
-    android:versionCode="3"
-    android:versionName="0.0.3"
+    android:versionCode="10"
+    android:versionName="0.1.0"
     >
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="14"
         />
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!--uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" /-->
 
     <application
         android:name="MyApplication"
@@ -36,6 +40,14 @@
             />
         <activity
             android:name="CharacterListActivity"
+            />
+        <activity
+            android:name="UnicodeCheckerActivity"
+            android:label="@string/activity_name_unicode"
+            />
+        <activity
+            android:name="QRScannerActivity"
+            android:label="@string/activity_name_qr"
             />
     </application>
 

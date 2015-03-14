@@ -43,7 +43,7 @@ public class MainActivity extends Activity {
 
         final MyApplication app = (MyApplication) getApplication();
         if (!app.isHaveResources()) {
-            startDownloadTask();
+            startDownloadTask(false);
         }
     }
 
@@ -65,6 +65,14 @@ public class MainActivity extends Activity {
         startActivity(intent);
     }
 
+    public void onClickShowUnicodeChecker(View v) {
+        startActivity(new Intent(this, UnicodeCheckerActivity.class));
+    }
+
+    /*public void onClickShowQRScanner(View v) {
+        startActivity(new Intent(this, QRScannerActivity.class));
+    }*/
+
     public void onClickGoToWebSite(View v) {
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(MyApplication.URL_BASE)));
     }
@@ -78,7 +86,7 @@ public class MainActivity extends Activity {
         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                startDownloadTask();
+                startDownloadTask(true);
             }
         }).show();
     }
@@ -89,12 +97,12 @@ public class MainActivity extends Activity {
 
     /*-----------------------------------------------------------------------*/
 
-    private void startDownloadTask() {
+    private void startDownloadTask(final boolean force) {
         MyAsyncTaskWithDialog.ITask task = new MyAsyncTaskWithDialog.ITask() {
             @Override
             public Boolean task() {
                 MyApplication app = (MyApplication) getApplication();
-                return app.downloadResources();
+                return app.downloadResources(force);
             }
             @Override
             public void post(Boolean result) {

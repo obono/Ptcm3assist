@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -40,9 +42,12 @@ public class MyApplication extends Application {
     private static final String URL_CMD_HTML = URL_BASE + "reference/index.php";
     private static final String URL_SPU_PNG = URL_BASE + "image/ss-story-attachment-1.png";
     private static final String URL_BG_PNG = URL_BASE + "image/ss-story-attachment-2.png";
+    private static final String URL_FONT_ZIP = URL_BASE + "media/font/smilebasicfont_20150304.zip";
+    private static final String TARGET_TTF = "smilebasicfont_20150304/SmileBASIC.ttf";
     private static final String FNAME_CMD_HTML = "cmd.html";
     private static final String FNAME_SPU_PNG = "spu.png";
     private static final String FNAME_BG_PNG = "bg.png";
+    private static final String FNAME_FONT_TTF = "font.ttf";
 
     private static final String ID_CONTENTAREA = "contentarea";
     private static final String TAG_TABLE = "table";
@@ -75,15 +80,17 @@ public class MyApplication extends Application {
     public boolean isHaveResources() {
         return (getFileStreamPath(FNAME_CMD_HTML).exists() &&
                 getFileStreamPath(FNAME_SPU_PNG).exists() &&
-                getFileStreamPath(FNAME_BG_PNG).exists());
+                getFileStreamPath(FNAME_BG_PNG).exists() &&
+                getFileStreamPath(FNAME_FONT_TTF).exists());
     }
 
-    public boolean downloadResources() {
+    public boolean downloadResources(boolean force) {
         mCommands = null;
         mCategories = null;
-        return (downloadFile(URL_CMD_HTML, FNAME_CMD_HTML) &&
-                downloadFile(URL_SPU_PNG, FNAME_SPU_PNG) &&
-                downloadFile(URL_BG_PNG, FNAME_BG_PNG));
+        return (downloadFile(URL_CMD_HTML, FNAME_CMD_HTML, force) &&
+                downloadFile(URL_SPU_PNG, FNAME_SPU_PNG, force) &&
+                downloadFile(URL_BG_PNG, FNAME_BG_PNG, force) &&
+                downloadZipFile(URL_FONT_ZIP, TARGET_TTF, FNAME_FONT_TTF, force));
     }
 
     public ArrayList<Command> getCommandList() {
@@ -109,7 +116,10 @@ public class MyApplication extends Application {
 
     /*-----------------------------------------------------------------------*/
 
-    private boolean downloadFile(String url, String fileName) {
+    private boolean downloadFile(String url, String fileName, boolean force) {
+        if (!force && getFileStreamPath(fileName).exists()) {
+            return true;
+        }
         InputStream in = null;
         OutputStream out = null;
         try {
@@ -124,6 +134,35 @@ public class MyApplication extends Application {
             }
             out.close(); 
             in.close();
+        } catch (Exception e){
+            e.printStackTrace();
+            getFileStreamPath(fileName).delete();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean downloadZipFile(String url, String target, String fileName, boolean force) {
+        if (!force && getFileStreamPath(fileName).exists()) {
+            return true;
+        }
+        try {
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpResponse httpResponse = httpclient.execute(new HttpGet(url));
+            ZipInputStream zin = new ZipInputStream(httpResponse.getEntity().getContent());
+            for (ZipEntry entry = zin.getNextEntry(); entry != null; entry = zin.getNextEntry()) {
+                if (target.equals(entry.getName())) {
+                    OutputStream out = openFileOutput(fileName, MODE_PRIVATE);
+                    byte[] buffer = new byte[1024 * 1024];
+                    int length;
+                    while ((length = zin.read(buffer)) >= 0) {
+                        out.write(buffer, 0, length);  
+                    }
+                    out.close(); 
+                    break;
+                }
+            }
+            zin.close();
         } catch (Exception e){
             e.printStackTrace();
             getFileStreamPath(fileName).delete();
