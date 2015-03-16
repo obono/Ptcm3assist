@@ -136,6 +136,10 @@ public class UnicodeCheckerActivity extends Activity {
         mBtnNext = (Button) findViewById(R.id.btn_unicode_next);
         mEditTextSource.addTextChangedListener(mTextWatcher);
         mEditTextSource.setOnFocusChangeListener(mOnFocusChangeListener);
+
+        CodeMatrixView v = (CodeMatrixView) findViewById(R.id.codematrixview);
+        MyApplication app = (MyApplication) getApplication();
+        v.setTypeface(app.getSBFontTypeFace());
     }
 
     @Override

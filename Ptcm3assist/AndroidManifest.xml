@@ -44,6 +44,7 @@
         <activity
             android:name="UnicodeCheckerActivity"
             android:label="@string/activity_name_unicode"
+            android:windowSoftInputMode="adjustPan"
             />
         <activity
             android:name="QRScannerActivity"

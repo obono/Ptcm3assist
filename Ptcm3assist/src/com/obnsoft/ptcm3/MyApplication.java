@@ -34,6 +34,7 @@ import org.jsoup.nodes.Element;
 import android.app.Application;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 
 public class MyApplication extends Application {
 
@@ -112,6 +113,16 @@ public class MyApplication extends Application {
 
     public Bitmap getBgCharacterImage() {
         return loadImageFile(FNAME_BG_PNG);
+    }
+
+    public Typeface getSBFontTypeFace() {
+        Typeface ret = null;
+        try {
+            ret = Typeface.createFromFile(getFileStreamPath(FNAME_FONT_TTF));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ret;
     }
 
     /*-----------------------------------------------------------------------*/
