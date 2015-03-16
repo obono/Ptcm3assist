@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="unicode_origin_labels">
+        <item>00xx: Latin</item>
+        <item>01xx: Latin</item>
+        <item>02xx: Latin</item>
+        <item>03xx: Latin</item>
+        <item>04xx: Latin</item>
+        <item>20xx: 記号</item>
+        <item>21xx: 記号</item>
+        <item>22xx: 記号</item>
+        <item>23xx: 記号</item>
+        <item>25xx: 記号</item>
+        <item>26xx: 記号</item>
+        <item>30xx: 日本語</item>
+        <item>4Exx: 日本語</item>
+        <item>E1xx: 行番号</item>
+        <item>E2xx: 外字</item>
+        <item>FFxx: 全角</item>
+    </string-array>
+</resources>

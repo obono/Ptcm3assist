@@ -65,6 +65,7 @@
                 android:text="@string/menu_goto_website"
                 android:drawableLeft="@drawable/ic_website"
                 android:onClick="onClickGoToWebSite"
+                style="?android:attr/buttonStyleSmall"
                 />
             <Button
                 android:layout_width="match_parent"
@@ -72,6 +73,7 @@
                 android:text="@string/menu_reload_resources"
                 android:drawableLeft="@drawable/ic_download"
                 android:onClick="onClickReloadResource"
+                style="?android:attr/buttonStyleSmall"
                 />
             <Button
                 android:layout_width="match_parent"
@@ -79,6 +81,7 @@
                 android:text="@string/menu_about"
                 android:drawableLeft="@drawable/ic_about"
                 android:onClick="onClickAbout"
+                style="?android:attr/buttonStyleSmall"
                 />
         </LinearLayout>
     </LinearLayout>

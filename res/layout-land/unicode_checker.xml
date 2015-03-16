@@ -45,6 +45,13 @@
         android:singleLine="true"
         android:hint="@string/label_unicode_source"
         />
+    <com.obnsoft.ptcm3.CodeMatrixView
+        android:id="@+id/codematrixview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_unicode_detail"
+        android:layout_alignParentBottom="true"
+        />
     <TextView
         android:id="@+id/text_unicode_encoded"
         android:layout_width="match_parent"
