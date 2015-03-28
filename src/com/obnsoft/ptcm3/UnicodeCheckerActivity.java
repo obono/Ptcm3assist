@@ -64,8 +64,6 @@ public class UnicodeCheckerActivity extends Activity {
     private Editable    mEditableSource;
     private Editable    mEditableEncoded = new SpannableStringBuilder();
     private ArrayList<Integer>  mEncodedDelimitAry = new ArrayList<Integer>();
-    private SimpleDateFormat    mDateFormat =
-            new SimpleDateFormat("'文字コード情報('yyMMdd'-'HHmmss')'", Locale.US);
 
     /*----------------------------------------------------------------------*/
 
@@ -245,14 +243,11 @@ public class UnicodeCheckerActivity extends Activity {
     private void shareEncodedResult() {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_SUBJECT, mDateFormat.format(new Date()));
-        intent.putExtra(Intent.EXTRA_TEXT, new StringBuffer()
-            .append("元の文字列:\n")
-            .append(mEditableSource.toString())
-            .append("\n\n文字コード:\n")
-            .append(mEditableEncoded.toString())
-            .append('\n')
-            .toString());
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                getString(R.string.fmt_shareencode_title), Locale.US);
+        intent.putExtra(Intent.EXTRA_SUBJECT, dateFormat.format(new Date()));
+        intent.putExtra(Intent.EXTRA_TEXT, String.format(getString(R.string.fmt_shareencode_body),
+                mEditableSource.toString(), mEditableEncoded.toString()));
         try {
             startActivity(intent);
         } catch (ActivityNotFoundException e) {
