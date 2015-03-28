@@ -22,6 +22,8 @@
     <string name="label_unicode_detail">文字コード情報</string>
     <string name="fmt_chrinfo_spdef" formatted="false">定義番号: %d\nソース: (%d,%d) %dx%d\n原点: (%d,%d)\nアトリビュート: %d</string>
     <string name="fmt_chrinfo_bg" formatted="false">キャラ番号: %d\nソース: (%d,%d) 16x16</string>
+    <string name="fmt_shareencode_title" formatted="false">\'文字コード情報(\'yyMMdd\'-\'HHmmss\')\'</string>
+    <string name="fmt_shareencode_body" formatted="false">元の文字列:\n%s\n\n文字コード:\n%s\n</string>
     <string name="msg_downloading">ダウンロード中&#8230;</string>
     <string name="msg_download_failed">ダウンロードに失敗しました</string>
     <string name="msg_download_confirm">プチコン3号公式ウェブサイトから、必要なデータをダウンロードします。</string>

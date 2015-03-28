@@ -173,12 +173,14 @@ public class CodeMatrixView extends View implements OnClickListener {
                 for (int j = Math.max(0, start - mCodeOrigin);
                         j <= Math.min(255, end - mCodeOrigin); j++) {
                     char c = (char) (mCodeOrigin + j);
-                    if (c == '\0')          c = ' ';
-                    if (c == 9)             c = 0xE209;
-                    if (c == 10 || c == 13) c = 0x21B5;
-                    if (c == 0x007F)        c = 0xFF3C;
-                    if (c == 0x021A)        c = 0x0162;
-                    if (c == 0x021B)        c = 0x0163;
+                    if (c == 0x0000 || c == 0xFF00) c = ' ';
+                    if (c == 0x0009)                c = 0xE209;
+                    if (c == 0x0010 || c == 0x0013) c = 0x21B5;
+                    if (c == 0x007F)                c = 0xFF3C;
+                    //if (c == 0x01C5 || c == 0x01C6) c = ' ';
+                    //if (c == 0x01F0)                c = ' ';
+                    //if (c == 0x01F2 || c == 0x01F3) c = ' ';
+                    if (c == 0x021A || c == 0x021B) c = (char) (c - 0x021A + 0x0162);
                     mCodeAvailableArray[j] = c;
                 }
             }
