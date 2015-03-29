@@ -20,16 +20,30 @@
     <string name="label_unicode_next">&#x25B6;</string>
     <string name="label_unicode_source">文字列を入力</string>
     <string name="label_unicode_detail">文字コード情報</string>
+    <string name="label_qr_focus">タッチでオートフォーカス</string>
+    <string name="label_qr_accept">取り込む</string>
+    <string name="label_qr_accept_export">取り込んで\nエクスポート</string>
+    <string name="label_qr_drop">破棄</string>
+    <string name="label_qr_export_asbinary">バイナリ\nとして</string>
+    <string name="label_qr_export_astext">UTF-8\nとして</string>
     <string name="fmt_chrinfo_spdef" formatted="false">定義番号: %d\nソース: (%d,%d) %dx%d\n原点: (%d,%d)\nアトリビュート: %d</string>
     <string name="fmt_chrinfo_bg" formatted="false">キャラ番号: %d\nソース: (%d,%d) 16x16</string>
     <string name="fmt_shareencode_title" formatted="false">\'文字コード情報(\'yyMMdd\'-\'HHmmss\')\'</string>
     <string name="fmt_shareencode_body" formatted="false">元の文字列:\n%s\n\n文字コード:\n%s\n</string>
+    <string name="fmt_qr_info" formatted="false">QRコード枚数: %d 枚\nデータ量: %d bytes</string>
+    <string name="fmt_qr_scanned" formatted="false">スキャンに成功しました\n(%d枚目, %d bytes)</string>
+    <string name="fmt_qr_export_title" formatted="false">\'QRコードスキャン結果(\'yyMMdd\'-\'HHmmss\')\'</string>
     <string name="msg_downloading">ダウンロード中&#8230;</string>
     <string name="msg_download_failed">ダウンロードに失敗しました</string>
     <string name="msg_download_confirm">プチコン3号公式ウェブサイトから、必要なデータをダウンロードします。</string>
     <string name="msg_buildlist">命令表を構築中&#8230;</string>
     <string name="msg_buildlist_failed">命令表の構築に失敗しました</string>
     <string name="msg_unicode_share_failed">アプリ起動に失敗しました</string>
+    <string name="msg_qr_scanned">スキャン成功</string>
+    <string name="msg_qr_clear">スキャンしたデータをクリアします</string>
+    <string name="msg_qr_export">スキャンしたデータをエクスポートします</string>
+    <string name="msg_qr_camera_failed">カメラの起動に失敗しました</string>
+    <string name="msg_qr_export_failed">エクスポートに失敗しました</string>
     <string name="menu_sort_category">カテゴリ順にソート</string>
     <string name="menu_sort_alphabet">アルファベット順にソート</string>
     <string name="menu_unicode_10comma">10進数カンマ区切り</string>
@@ -38,5 +52,7 @@
     <string name="menu_unicode_share">共有</string>
     <string name="menu_goto_website">プチコン3号公式ウェブサイト</string>
     <string name="menu_reload_resources">データの更新(再ダウンロード)</string>
+    <string name="menu_qr_clear">データのクリア</string>
+    <string name="menu_qr_export">データのエクスポート</string>
     <string name="menu_about">バージョン情報</string>
 </resources>

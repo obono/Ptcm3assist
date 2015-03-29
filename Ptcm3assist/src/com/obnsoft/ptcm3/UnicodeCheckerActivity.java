@@ -167,7 +167,6 @@ public class UnicodeCheckerActivity extends Activity {
         return false;
     }
 
-    
     @Override
     protected void onResume() {
         super.onResume();
@@ -248,6 +247,7 @@ public class UnicodeCheckerActivity extends Activity {
         intent.putExtra(Intent.EXTRA_SUBJECT, dateFormat.format(new Date()));
         intent.putExtra(Intent.EXTRA_TEXT, String.format(getString(R.string.fmt_shareencode_body),
                 mEditableSource.toString(), mEditableEncoded.toString()));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         try {
             startActivity(intent);
         } catch (ActivityNotFoundException e) {

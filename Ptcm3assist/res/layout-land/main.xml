@@ -52,13 +52,6 @@
                 android:drawableLeft="@drawable/ic_chr"
                 android:onClick="onClickShowUnicodeChecker"
                 />
-            <!--Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/activity_name_qr"
-                android:drawableLeft="@drawable/ic_qr"
-                android:onClick="onClickShowQRScanner"
-                /-->
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -73,6 +66,14 @@
                 android:text="@string/menu_reload_resources"
                 android:drawableLeft="@drawable/ic_download"
                 android:onClick="onClickReloadResource"
+                style="?android:attr/buttonStyleSmall"
+                />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_name_qr"
+                android:drawableLeft="@drawable/ic_qr"
+                android:onClick="onClickShowQRScanner"
                 style="?android:attr/buttonStyleSmall"
                 />
             <Button
