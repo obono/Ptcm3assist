@@ -16,6 +16,8 @@
     <string name="label_returns_header">戻り</string>
     <string name="label_samples_header">サンプル</string>
     <string name="label_notes_header">備考</string>
+    <string name="label_listindex_symbol">記号</string>
+    <string name="label_listindex_other">その他</string>
     <string name="label_unicode_prev">&#x25C0;</string>
     <string name="label_unicode_next">&#x25B6;</string>
     <string name="label_unicode_source">文字列を入力</string>
@@ -24,8 +26,8 @@
     <string name="label_qr_accept">取り込む</string>
     <string name="label_qr_accept_export">取り込んで\nエクスポート</string>
     <string name="label_qr_drop">破棄</string>
-    <string name="label_qr_export_asbinary">バイナリ\nとして</string>
-    <string name="label_qr_export_astext">UTF-8\nとして</string>
+    <string name="label_qr_export_asbinary">バイナリデータ\nとして出力</string>
+    <string name="label_qr_export_astext">UTF-8文字列\nとして出力</string>
     <string name="fmt_chrinfo_spdef" formatted="false">定義番号: %d\nソース: (%d,%d) %dx%d\n原点: (%d,%d)\nアトリビュート: %d</string>
     <string name="fmt_chrinfo_bg" formatted="false">キャラ番号: %d\nソース: (%d,%d) 16x16</string>
     <string name="fmt_shareencode_title" formatted="false">\'文字コード情報(\'yyMMdd\'-\'HHmmss\')\'</string>

@@ -60,5 +60,10 @@
 
 -dontwarn com.google.android.gms.**
 -dontwarn android.support.v4.**
+-dontwarn java.awt.**
+-dontwarn javax.**
+-dontwarn org.w3c.dom.bootstrap.DOMImplementationRegistry
+-dontwarn com.google.zxing.client.j2se.GUIRunner
 
 -keep class org.jsoup.**
+-keep class com.google.zxing.**
