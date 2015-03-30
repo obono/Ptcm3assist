@@ -213,14 +213,20 @@ public class CommandListActivity extends ListActivity {
                     return a.text.compareTo(b.text);
                 }
             });
-            String startChar = null;
+            char startChar = 0;
             for (int i = adapter.getCount() - 1; i >= 0; i--) {
-                if (startChar == null) {
-                    startChar = adapter.getItem(i).text.substring(0, 1);
+                if (startChar == 0) {
+                    startChar = checkStartChar(adapter.getItem(i).text);
                 }
-                if (i == 0 || !adapter.getItem(i - 1).text.startsWith(startChar)) {
-                    adapter.insert(new MyItem(-1, startChar, -1), i);
-                    startChar = null;
+                if (i == 0 || checkStartChar(adapter.getItem(i - 1).text) != startChar) {
+                    String startCharLabel;
+                    switch (startChar) {
+                    case '@': startCharLabel = getString(R.string.label_listindex_symbol); break;
+                    case '_': startCharLabel = getString(R.string.label_listindex_other); break;
+                    default:  startCharLabel = String.valueOf(startChar); break;
+                    }
+                    adapter.insert(new MyItem(-1, startCharLabel, -1), i);
+                    startChar = 0;
                 }
             }
             break;
@@ -232,4 +238,10 @@ public class CommandListActivity extends ListActivity {
         mSortType = sortType;
     }
 
+    private char checkStartChar(String str) {
+        char c = str.charAt(0);
+        if (c < 'A') c = '@';
+        if (c > 'Z') c = '_';
+        return c;
+    }
 }

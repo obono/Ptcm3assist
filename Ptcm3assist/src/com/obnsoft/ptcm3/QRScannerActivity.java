@@ -63,7 +63,7 @@ import android.widget.Toast;
 public class QRScannerActivity extends Activity
         implements SurfaceHolder.Callback, AutoFocusCallback, PreviewCallback {
 
-    private static final String EXPORT_FILEPATH =
+    public static final String EXPORT_FILEPATH =
         Environment.getExternalStorageDirectory().getPath() + File.separator + "ptcm3.bin";
 
     private static final int SCAN_INTERVAL = 1000;
@@ -299,8 +299,13 @@ public class QRScannerActivity extends Activity
 
     private void startScanning() {
         if (mCamera != null) {
-            mCamera.setPreviewCallbackWithBuffer(this);
-            mCamera.startPreview();
+            try {
+                mCamera.setPreviewCallbackWithBuffer(this);
+                mCamera.startPreview();
+            } catch (RuntimeException e) {
+                Toast.makeText(this, R.string.msg_qr_camera_failed, Toast.LENGTH_LONG).show();
+                finish();
+            }
             if (mTimer == null) {
                 mTimer = new Timer(true);
                 mTimer.schedule(new TimerTask() {

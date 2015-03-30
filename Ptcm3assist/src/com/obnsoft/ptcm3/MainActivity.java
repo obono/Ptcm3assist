@@ -17,6 +17,7 @@
 package com.obnsoft.ptcm3;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
@@ -41,7 +42,11 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        final MyApplication app = (MyApplication) getApplication();
+        File outputFile = new File(QRScannerActivity.EXPORT_FILEPATH);
+        if (outputFile.exists()) {
+            outputFile.delete();
+        }
+        MyApplication app = (MyApplication) getApplication();
         if (!app.isHaveResources()) {
             startDownloadTask(false);
         }

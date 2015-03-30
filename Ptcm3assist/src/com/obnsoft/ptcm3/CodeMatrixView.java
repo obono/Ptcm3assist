@@ -175,7 +175,7 @@ public class CodeMatrixView extends View implements OnClickListener {
                     char c = (char) (mCodeOrigin + j);
                     if (c == 0x0000 || c == 0xFF00) c = ' ';
                     if (c == 0x0009)                c = 0xE209;
-                    if (c == 0x0010 || c == 0x0013) c = 0x21B5;
+                    if (c == 0x000A || c == 0x000D) c = 0x21B5;
                     if (c == 0x007F)                c = 0xFF3C;
                     //if (c == 0x01C5 || c == 0x01C6) c = ' ';
                     //if (c == 0x01F0)                c = ' ';
