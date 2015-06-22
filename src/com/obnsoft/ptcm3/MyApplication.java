@@ -43,8 +43,8 @@ public class MyApplication extends Application {
     private static final String URL_CMD_HTML = URL_BASE + "reference/index.php";
     private static final String URL_SPU_PNG = URL_BASE + "image/ss-story-attachment-1.png";
     private static final String URL_BG_PNG = URL_BASE + "image/ss-story-attachment-2.png";
-    private static final String URL_FONT_ZIP = URL_BASE + "media/font/smilebasicfont_20150304.zip";
-    private static final String TARGET_TTF = "smilebasicfont_20150304/SmileBASIC.ttf";
+    private static final String URL_FONT_ZIP = URL_BASE + "media/font/smilebasicfont_20150617.zip";
+    private static final String TARGET_TTF = "smilebasicfont/SMILEBASIC.ttf";
     private static final String FNAME_CMD_HTML = "cmd.html";
     private static final String FNAME_SPU_PNG = "spu.png";
     private static final String FNAME_BG_PNG = "bg.png";

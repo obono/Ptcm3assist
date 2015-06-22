@@ -29,26 +29,39 @@ import android.widget.TextView;
 
 public class Command {
 
-    private class StringPair {
-        String first;
-        String second;
-        public StringPair(Element trElement) {
-            Elements children = trElement.children();
-            this.first = br2cr(children.get(1));
-            this.second = (children.size() > 2) ? br2cr(children.get(2)) : "";
-        }
-    }
-
-    /*-----------------------------------------------------------------------*/
-
     private static final String TAG_THEAD = "thead";
     private static final String TAG_TBODY = "tbody";
+    private static final String TAG_TD = "td";
+    private static final String TAG_BR = "br";
 
     private static final String CLASS_FORM = "form";
     private static final String CLASS_PARAMETER = "parameter";
     private static final String CLASS_RETURN = "return";
     private static final String CLASS_SAMPLE = "sample";
     private static final String CLASS_NOTES = "notes";
+
+    /*-----------------------------------------------------------------------*/
+
+    private class StringPair {
+        String first = "";
+        String second = "";
+        public StringPair(Element trElement) {
+            boolean isFirst = true;
+            for (Element element : trElement.children()) {
+                if (element.tagName().equals(TAG_TD)) {
+                    if (isFirst) {
+                        this.first = br2cr(element);
+                        isFirst = false;
+                    } else {
+                        this.second = br2cr(element);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    /*-----------------------------------------------------------------------*/
 
     private String mIndex;
     private StringPair mExplanation;
@@ -157,8 +170,8 @@ public class Command {
     /*-----------------------------------------------------------------------*/
 
     private String br2cr(Element e) {
-        e.select("br").append("\\n");
-        return e.text().concat(" ").replaceAll("\\\\n ", "\n");
+        e.select(TAG_BR).append("\\n");
+        return e.text().replaceAll("\\\\n\\s*", "\n").trim();
     }
 
     private void setup1ColumnTableLayout(
